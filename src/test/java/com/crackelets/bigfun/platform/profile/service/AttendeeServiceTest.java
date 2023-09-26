@@ -59,6 +59,14 @@ public class AttendeeServiceTest {
         Assertions.assertEquals(expected, actual);
     }
 
+    @Test
+    @DisplayName("Get by Id Attendees - Ok")
+    public void testGetByIdAttendees() {
+        Attendee expected = new Attendee();
+        when(attendeeRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(expected));
+        Attendee actual = attendeeService.getById(1L);
+        Assertions.assertEquals(expected, actual);
+    }
 
 }
 
