@@ -20,6 +20,10 @@ Feature: Organizer Adding
     And A Message is included in Response Body, with value "Not all constraints satisfied for Organizers: An organizer with the same email already exists."
 
 
+    Then the response body should contain an organizer with the following values:
+      | name             | username | email                |
+      | Isabella Soriano | IsabellaSH | isabella@gmail.com |
 
-
-
+    Given an organizer with the following values is already stored:
+      | name              | username | email                     |
+      | Jesus Montenegro | JesusM   | jesusmontenegro@gmail.com |
