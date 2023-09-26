@@ -50,6 +50,15 @@ public class AttendeeServiceTest {
         Assertions.assertEquals(expected.size(), actual.size());
     }
 
+    @Test
+    @DisplayName("Get All Pageable Attendees - Ok")
+    public void testGetAllPageableAttendees() {
+        Page<Attendee> expected = new PageImpl<>(Arrays.asList(new Attendee(), new Attendee()));
+        when(attendeeRepository.findAll(any(Pageable.class))).thenReturn(expected);
+        Page<Attendee> actual = attendeeService.getAll(Pageable.unpaged());
+        Assertions.assertEquals(expected, actual);
+    }
+
 
 }
 
