@@ -4,7 +4,7 @@ Feature: Attendee Adding
   So that It can be available to applications.
 
   Background:
-    Given The Endpoint "http://localhost:%d/api/v1/attendees" is available
+    Given The Endpoint "http://localhost:8080/api/v1/attendees" is available
 
   @attendee-adding
   Scenario: Add attendee with unique userName
