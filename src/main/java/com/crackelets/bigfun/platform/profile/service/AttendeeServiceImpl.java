@@ -36,7 +36,7 @@ public class AttendeeServiceImpl implements AttendeeService {
 
     @Override
     public Page<Attendee> getAll(Pageable pageable) {
-        return null;
+        return attendeeRepository.findAll(pageable);
     }
 
     @Override
