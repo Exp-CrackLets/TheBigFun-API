@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -41,6 +42,7 @@ public class EventServiceImpl implements EventService {
         return eventRepository.findAll(pageable);
     }
 
+
     @Override
     public Event getById(long eventId) {
         return eventRepository.findById(eventId)
@@ -65,27 +67,27 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Event update(Long eventId, Event event) {
-        Set<ConstraintViolation<Event>> violations = validator.validate(event);
-
-        if (!violations.isEmpty())
-            throw  new ResourceValidationException(ENTITY, violations);
-
-        Event eventWithName = eventRepository.findByName(event.getName());
-
-        if(eventWithName != null && !eventWithName.getId().equals(event.getId()))
-            throw new ResourceValidationException(ENTITY, "An event with the same name already exists.");
-
-        return eventRepository.findById(eventId).map(eventToUpdate -> eventRepository.save(
-                eventToUpdate.withName(event.getName())
-                        .withDate(event.getDate())
-                        .withAddress(event.getAddress())
-                        .withCost(event.getCost())
-                        .withImage(event.getImage())
-                        .withCapacity(event.getCapacity())))
+        Event eventToUpdate = eventRepository.findById(eventId)
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, eventId));
 
-    }
+        Set<ConstraintViolation<Event>> violations = validator.validate(event);
 
+        if (!violations.isEmpty()) {
+            throw new ResourceValidationException(ENTITY, violations);
+        }
+        Event eventWithName = eventRepository.findByName(event.getName());
+
+        if (eventWithName != null && !eventWithName.getId().equals(eventId)) {
+            throw new ResourceValidationException(ENTITY, "An event with the same name already exists.");
+        }
+        eventToUpdate.setName(event.getName());
+        eventToUpdate.setDate(event.getDate());
+        eventToUpdate.setAddress(event.getAddress());
+        eventToUpdate.setCost(event.getCost());
+        eventToUpdate.setImage(event.getImage());
+        eventToUpdate.setCapacity(event.getCapacity());
+        return eventRepository.save(eventToUpdate);
+    }
     @Override
     public ResponseEntity<?> delete(Long eventId) {
         return eventRepository.findById(eventId).map(event -> {
