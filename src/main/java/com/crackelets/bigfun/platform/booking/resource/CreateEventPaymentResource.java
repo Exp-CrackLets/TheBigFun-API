@@ -8,5 +8,5 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateEventPaymentResource {
-    private Long paymentId;
+  private Long paymentId;
 }

@@ -20,92 +20,93 @@ import java.util.Set;
 @Service
 public class AttendeeServiceImpl implements AttendeeService {
 
-    private static final String ENTITY = "Attendee";
-    private final AttendeeRepository attendeeRepository;
-    private final Validator validator;
+  private static final String ENTITY = "Attendee";
+  private final AttendeeRepository attendeeRepository;
+  private final Validator validator;
 
-    public AttendeeServiceImpl(AttendeeRepository attendeeRepository, Validator validator) {
-        this.attendeeRepository = attendeeRepository;
-        this.validator = validator;
-    }
+  public AttendeeServiceImpl(AttendeeRepository attendeeRepository, Validator validator) {
+    this.attendeeRepository = attendeeRepository;
+    this.validator = validator;
+  }
 
-    @Override
-    public List<Attendee> getAll() {
-        return attendeeRepository.findAll();
-    }
+  @Override
+  public List<Attendee> getAll() {
+    return attendeeRepository.findAll();
+  }
 
-    @Override
-    public Page<Attendee> getAll(Pageable pageable) {
-        return attendeeRepository.findAll(pageable);
-    }
+  @Override
+  public Page<Attendee> getAll(Pageable pageable) {
+    return attendeeRepository.findAll(pageable);
+  }
 
-    @Override
-    public Attendee getById(Long attendeeId) {
-        return attendeeRepository.findById(attendeeId)
-                .orElseThrow(() -> new ResourceNotFoundException(ENTITY, attendeeId));
-    }
+  @Override
+  public Attendee getById(Long attendeeId) {
+    return attendeeRepository.findById(attendeeId)
+            .orElseThrow(() -> new ResourceNotFoundException(ENTITY, attendeeId));
+  }
 
-    @Override
-    public Attendee getByName(String name) {
-        var attendeeWithName = attendeeRepository.findFirstByName(name);
-        if(attendeeWithName==null)
-            throw new ResourceValidationException(ENTITY,"The attendee doesn't exist.");
-        return attendeeWithName;
-    }
+  @Override
+  public Attendee getByName(String name) {
+    var attendeeWithName = attendeeRepository.findFirstByName(name);
+    if (attendeeWithName == null)
+      throw new ResourceValidationException(ENTITY, "The attendee doesn't exist.");
+    return attendeeWithName;
+  }
 
-    @Override
-    public Attendee create(Attendee attendee) {
+  @Override
+  public Attendee create(Attendee attendee) {
 
-        Set<ConstraintViolation<Attendee>> violations = validator.validate(attendee);
+    Set<ConstraintViolation<Attendee>> violations = validator.validate(attendee);
 
-        if (!violations.isEmpty())
-            throw new ResourceValidationException(ENTITY, violations);
+    if (!violations.isEmpty())
+      throw new ResourceValidationException(ENTITY, violations);
 
-        Attendee attendeeWithUserName = attendeeRepository.findByUserName(attendee.getUserName());
+    Attendee attendeeWithUserName = attendeeRepository.findByUserName(attendee.getUserName());
 
-        if(attendeeWithUserName != null)
-            throw new ResourceValidationException(ENTITY,
-                    "An attendee with the same user name already exists.");
+    if (attendeeWithUserName != null)
+      throw new ResourceValidationException(ENTITY,
+              "An attendee with the same user name already exists.");
 
-        return attendeeRepository.save(attendee);
-    }
+    return attendeeRepository.save(attendee);
+  }
 
-    @Override
-    public Attendee update(Long id, Attendee attendee) {
+  @Override
+  public Attendee update(Long id, Attendee attendee) {
 
-        Set<ConstraintViolation<Attendee>> violations = validator.validate(attendee);
+    Set<ConstraintViolation<Attendee>> violations = validator.validate(attendee);
 
-        if(!violations.isEmpty())
-            throw new ResourceValidationException(ENTITY, violations);
+    if (!violations.isEmpty())
+      throw new ResourceValidationException(ENTITY, violations);
 
-        Attendee attendeeWithUserName = attendeeRepository.findByUserName(attendee.getUserName());
+    Attendee attendeeWithUserName = attendeeRepository.findByUserName(attendee.getUserName());
 
-        if(attendeeWithUserName != null && !attendeeWithUserName.getId().equals(attendee.getId()))
-            throw new ResourceValidationException(ENTITY,
-                    "An attendee with the same username already exists.");
+    if (attendeeWithUserName != null && !attendeeWithUserName.getId().equals(attendee.getId()))
+      throw new ResourceValidationException(ENTITY,
+              "An attendee with the same username already exists.");
 
-        return attendeeRepository.findById(id).map(attendeeToUpdate ->
-                        attendeeRepository.save(
-                                attendeeToUpdate.withName(attendee.getName())
-                                        .withEmail(attendee.getEmail())
-                                        .withUserName(attendee.getUserName())))
-                .orElseThrow(() -> new ResourceNotFoundException(ENTITY, id));
+    return attendeeRepository.findById(id).map(attendeeToUpdate ->
+                    attendeeRepository.save(
+                            attendeeToUpdate.withName(attendee.getName())
+                                    .withEmail(attendee.getEmail())
+                                    .withUserName(attendee.getUserName())))
+            .orElseThrow(() -> new ResourceNotFoundException(ENTITY, id));
 
-    }
+  }
 
-    @Override
-    public ResponseEntity<?> delete(Long attendeeId) {
+  @Override
+  public ResponseEntity<?> delete(Long attendeeId) {
 
-        return attendeeRepository.findById(attendeeId).map(attendee -> {
-                    attendeeRepository.delete(attendee);
-                    return ResponseEntity.ok().build();})
-                .orElseThrow(() -> new ResourceNotFoundException(ENTITY, attendeeId));
-    }
+    return attendeeRepository.findById(attendeeId).map(attendee -> {
+              attendeeRepository.delete(attendee);
+              return ResponseEntity.ok().build();
+            })
+            .orElseThrow(() -> new ResourceNotFoundException(ENTITY, attendeeId));
+  }
 
-    @Override
-    public Attendee addEventToAttendee(Long attendeeId, String eventName) {
+  @Override
+  public Attendee addEventToAttendee(Long attendeeId, String eventName) {
 
-        return null;
+    return null;
 
-    }
+  }
 }

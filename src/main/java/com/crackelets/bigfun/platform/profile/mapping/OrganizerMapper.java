@@ -15,30 +15,29 @@ import java.util.List;
 
 public class OrganizerMapper implements Serializable {
 
-    @Autowired //With this I can do dependency injection
-    EnhancedModelMapper mapper;
+  @Autowired //With this I can do dependency injection
+  EnhancedModelMapper mapper;
 
-    public OrganizerResource toResource(Organizer model){
+  public OrganizerResource toResource(Organizer model) {
 
-        return mapper.map(model,OrganizerResource.class);
-    }
+    return mapper.map(model, OrganizerResource.class);
+  }
 
-    public Organizer toModel(CreateOrganizerResource resource){
+  public Organizer toModel(CreateOrganizerResource resource) {
 
-        return mapper.map(resource,Organizer.class);
-    }
+    return mapper.map(resource, Organizer.class);
+  }
 
 
+  public Organizer toModel(UpdateOrganizerResource resource) {
 
-    public Organizer toModel(UpdateOrganizerResource resource){
+    return mapper.map(resource, Organizer.class);
+  }
 
-        return mapper.map(resource,Organizer.class);
-    }
-
-    //to make the distribution we use something similar to the "paginator"
-    public Page<OrganizerResource> modelListPage(List<Organizer> modelList, Pageable pageable){
-        return new PageImpl<>(mapper.mapList(modelList,OrganizerResource.class),pageable,modelList.size());
-    }
+  //to make the distribution we use something similar to the "paginator"
+  public Page<OrganizerResource> modelListPage(List<Organizer> modelList, Pageable pageable) {
+    return new PageImpl<>(mapper.mapList(modelList, OrganizerResource.class), pageable, modelList.size());
+  }
 
 
 }

@@ -13,9 +13,9 @@ import java.util.Set;
 
 public class OrganizerResource {
 
-    private Long id;
-    private String userName;
-    private String name;
-    private String email;
-    private Set<OrganizerEvent> eventsListByOrganizer;
+  private Long id;
+  private String userName;
+  private String name;
+  private String email;
+  private Set<OrganizerEvent> eventsListByOrganizer;
 }

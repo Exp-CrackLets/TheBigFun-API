@@ -13,9 +13,9 @@ import java.util.Set;
 @AllArgsConstructor
 public class AttendeeResource {
 
-    private Long id;
-    private String userName;
-    private String name;
-    private String email;
-    private Set<AttendeeEvent>eventsListByAttendee;
+  private Long id;
+  private String userName;
+  private String name;
+  private String email;
+  private Set<AttendeeEvent> eventsListByAttendee;
 }

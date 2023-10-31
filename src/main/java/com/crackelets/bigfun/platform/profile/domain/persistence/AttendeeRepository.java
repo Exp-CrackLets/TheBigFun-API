@@ -5,10 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AttendeeRepository extends JpaRepository<Attendee, Long> {
 
-    Attendee findFirstByName(String name);
+  Attendee findFirstByName(String name);
 
-    Attendee findByUserName(String name);
+  Attendee findByUserName(String name);
 
-    Attendee findByEmail(String email);
+  Attendee findByEmail(String email);
 
 }

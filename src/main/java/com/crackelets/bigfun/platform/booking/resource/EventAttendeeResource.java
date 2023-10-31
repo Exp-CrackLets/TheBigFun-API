@@ -10,6 +10,6 @@ import lombok.*;
 @NoArgsConstructor
 public class EventAttendeeResource {
 
-    private Long attendeeId;
-    private Event event;
+  private Long attendeeId;
+  private Event event;
 }

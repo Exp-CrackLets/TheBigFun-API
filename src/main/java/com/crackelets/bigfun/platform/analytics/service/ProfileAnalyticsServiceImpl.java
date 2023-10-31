@@ -7,15 +7,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProfileAnalyticsServiceImpl implements ProfileAnalyticsService {
 
-    private final ProfileContextFacade profileContextFacade;
+  private final ProfileContextFacade profileContextFacade;
 
-    public ProfileAnalyticsServiceImpl(ProfileContextFacade profileContextFacade) {
-        this.profileContextFacade = profileContextFacade;
-    }
+  public ProfileAnalyticsServiceImpl(ProfileContextFacade profileContextFacade) {
+    this.profileContextFacade = profileContextFacade;
+  }
 
-    @Override
-    public int getTotalOrganizers() {
-        return profileContextFacade.getAllOrganizers().size();
-    }
+  @Override
+  public int getTotalOrganizers() {
+    return profileContextFacade.getAllOrganizers().size();
+  }
 
 }

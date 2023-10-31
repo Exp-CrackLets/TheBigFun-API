@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface EventPaymentService {
 
-    List<EventPayment> getAll();
+  List<EventPayment> getAll();
 
-    List<EventPayment> getAllPaymentByEventId(Long eventId);
+  List<EventPayment> getAllPaymentByEventId(Long eventId);
 
 }

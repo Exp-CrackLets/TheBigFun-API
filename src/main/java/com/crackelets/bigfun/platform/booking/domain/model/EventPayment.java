@@ -1,7 +1,10 @@
 package com.crackelets.bigfun.platform.booking.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import javax.persistence.*;import lombok.*;
+
+import javax.persistence.*;
+
+import lombok.*;
 
 @Getter
 @Setter
@@ -9,22 +12,22 @@ import javax.persistence.*;import lombok.*;
 @NoArgsConstructor
 @With
 @Entity
-@Table(name="event_payments")
+@Table(name = "event_payments")
 public class EventPayment {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER,optional = false)
-    @JoinColumn(name = "event_id",nullable = false)
-    @JsonIgnore
-    private Event event;
+  @ManyToOne(fetch = FetchType.EAGER, optional = false)
+  @JoinColumn(name = "event_id", nullable = false)
+  @JsonIgnore
+  private Event event;
 
-    private Long paymentId;
+  private Long paymentId;
 
-    public EventPayment(Event event, Long paymentId) {
-        this.event = event;
-        this.paymentId = paymentId;
-    }
+  public EventPayment(Event event, Long paymentId) {
+    this.event = event;
+    this.paymentId = paymentId;
+  }
 }

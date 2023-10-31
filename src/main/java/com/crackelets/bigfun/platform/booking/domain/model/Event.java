@@ -20,61 +20,60 @@ import java.util.Set;
 @Table(name = "events")
 public class Event extends AuditModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @NotNull
-    @NotBlank
-    @Size(max = 50)
-    @Column(unique = true)
-    private String name;
+  @NotNull
+  @NotBlank
+  @Size(max = 50)
+  @Column(unique = true)
+  private String name;
 
-    @Size(max =240)
-    private String address;
+  @Size(max = 240)
+  private String address;
 
-    @NotNull
-    private int capacity;
+  @NotNull
+  private int capacity;
 
-    @Size(max = 500)
-    private String image;
+  @Size(max = 500)
+  private String image;
 
-    @NotNull
-    private Date date;
+  @NotNull
+  private Date date;
 
-    @NotNull
-    private int cost;
+  @NotNull
+  private int cost;
 
-    @Size(max = 50)
-    @NotNull
-    private String district;
+  @Size(max = 50)
+  @NotNull
+  private String district;
 /*    @NotNull
     private Long organizerId;*/
 
 
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "event")
+  private Set<EventAttendee> attendeesListByEvent;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "event")
-    private Set<EventAttendee> attendeesListByEvent;
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "event")
+  private Set<EventPayment> payments;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "event")
-    private Set<EventPayment> payments;
+  public Event addAttendee(Event event, Long attendeeId) {
 
-    public Event addAttendee(Event event,Long attendeeId){
+    if (attendeesListByEvent == null) attendeesListByEvent = new HashSet<>();
 
-        if(attendeesListByEvent ==null) attendeesListByEvent = new HashSet<>();
+    this.attendeesListByEvent.add(new EventAttendee(this, attendeeId));
 
-        this.attendeesListByEvent.add(new EventAttendee(this, attendeeId));
+    return this;
+  }
 
-        return this;
-    }
+  public Event addPayment(Event event, Long paymentId) {
 
-    public Event addPayment(Event event,Long paymentId){
+    if (payments == null) payments = new HashSet<>();
 
-        if(payments ==null) payments = new HashSet<>();
+    this.payments.add(new EventPayment(this, paymentId));
 
-        this.payments.add(new EventPayment(this, paymentId));
-
-        return this;
-    }
+    return this;
+  }
 
 }

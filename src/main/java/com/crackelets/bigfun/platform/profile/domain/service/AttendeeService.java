@@ -9,21 +9,21 @@ import java.util.List;
 
 public interface AttendeeService {
 
-    List<Attendee> getAll();
+  List<Attendee> getAll();
 
-    Page<Attendee> getAll(Pageable pageable);
+  Page<Attendee> getAll(Pageable pageable);
 
-    Attendee getById(Long attendeeId);
+  Attendee getById(Long attendeeId);
 
-    Attendee getByName(String name);
+  Attendee getByName(String name);
 
-    Attendee create(Attendee attendee);
+  Attendee create(Attendee attendee);
 
-    Attendee update(Long id,Attendee attendee);
+  Attendee update(Long id, Attendee attendee);
 
-    ResponseEntity<?> delete (Long attendeeId);
+  ResponseEntity<?> delete(Long attendeeId);
 
-    Attendee addEventToAttendee(Long attendeeId, String eventName);
+  Attendee addEventToAttendee(Long attendeeId, String eventName);
 
-    //List<Attendee> getAllByEventId(Long eventId);
+  //List<Attendee> getAllByEventId(Long eventId);
 }

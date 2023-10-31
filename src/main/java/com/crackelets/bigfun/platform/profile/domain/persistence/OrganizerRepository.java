@@ -8,16 +8,20 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface OrganizerRepository extends JpaRepository <Organizer,Long> {
+public interface OrganizerRepository extends JpaRepository<Organizer, Long> {
 
-    //I make the queries with the attributes I want
-    Organizer findByName(String name);
-    Organizer findByUserName(String userName);
-    Organizer findByEmail(String email);
+  //I make the queries with the attributes I want
+  Organizer findByName(String name);
 
-    Organizer findFirstByEmail(String email);
-    Organizer findFirstByName(String name);
-    Organizer findFirstByUserName(String userName);
+  Organizer findByUserName(String userName);
+
+  Organizer findByEmail(String email);
+
+  Organizer findFirstByEmail(String email);
+
+  Organizer findFirstByName(String name);
+
+  Organizer findFirstByUserName(String userName);
 
 
 }

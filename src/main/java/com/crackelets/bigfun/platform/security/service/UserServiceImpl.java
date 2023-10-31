@@ -37,98 +37,98 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
-    @Autowired
-    private RoleRepository roleRepository;
+  @Autowired
+  private RoleRepository roleRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+  @Autowired
+  private UserRepository userRepository;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+  @Autowired
+  private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private JwtHandler handler;
+  @Autowired
+  private JwtHandler handler;
 
-    @Autowired
-    private PasswordEncoder encoder;
+  @Autowired
+  private PasswordEncoder encoder;
 
-    @Autowired
-    private EnhancedModelMapper mapper;
+  @Autowired
+  private EnhancedModelMapper mapper;
 
-    @Override
-    public ResponseEntity<?> authentication(AuthenticateRequest request) {
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            String token = handler.generateToken(authentication);
-            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-            List<String> roles = userDetails.getAuthorities().stream()
-                    .map(GrantedAuthority::getAuthority)
-                    .collect(Collectors.toList());
-            AuthenticateResource resource = mapper.map(userDetails, AuthenticateResource.class);
-            resource.setToken(token);
-            resource.setRoles(roles);
-            AuthenticateResponse response = new AuthenticateResponse(resource);
-            return ResponseEntity.ok(response.getResource());
-        } catch (Exception e) {
-            AuthenticateResponse response = new AuthenticateResponse(
-                    String.format("An error occurred while authenticating: %s", e.getMessage()));
-            return ResponseEntity.badRequest().body(response.getMessage());
-        }
+  @Override
+  public ResponseEntity<?> authentication(AuthenticateRequest request) {
+    try {
+      Authentication authentication = authenticationManager.authenticate(
+              new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+      SecurityContextHolder.getContext().setAuthentication(authentication);
+      String token = handler.generateToken(authentication);
+      UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+      List<String> roles = userDetails.getAuthorities().stream()
+              .map(GrantedAuthority::getAuthority)
+              .collect(Collectors.toList());
+      AuthenticateResource resource = mapper.map(userDetails, AuthenticateResource.class);
+      resource.setToken(token);
+      resource.setRoles(roles);
+      AuthenticateResponse response = new AuthenticateResponse(resource);
+      return ResponseEntity.ok(response.getResource());
+    } catch (Exception e) {
+      AuthenticateResponse response = new AuthenticateResponse(
+              String.format("An error occurred while authenticating: %s", e.getMessage()));
+      return ResponseEntity.badRequest().body(response.getMessage());
     }
+  }
 
-    @Override
-    public ResponseEntity<?> register(RegisterRequest request) {
-        if (userRepository.existsByUsername(request.getUsername())) {
-            AuthenticateResponse response = new AuthenticateResponse("Username is already used.");
-            return ResponseEntity.badRequest().body(response.getMessage());
-        }
-        if (userRepository.existsByEmail(request.getEmail())) {
-            AuthenticateResponse response = new AuthenticateResponse("Email is already used.");
-            return ResponseEntity.badRequest().body(response.getMessage());
-        }
-        try {
-            Set<String> rolesStringSet = request.getRoles();
-            Set<Role> roles = new HashSet<>();
-            if (rolesStringSet == null) {
-                roleRepository.findByName(Roles.ROLE_USER)
+  @Override
+  public ResponseEntity<?> register(RegisterRequest request) {
+    if (userRepository.existsByUsername(request.getUsername())) {
+      AuthenticateResponse response = new AuthenticateResponse("Username is already used.");
+      return ResponseEntity.badRequest().body(response.getMessage());
+    }
+    if (userRepository.existsByEmail(request.getEmail())) {
+      AuthenticateResponse response = new AuthenticateResponse("Email is already used.");
+      return ResponseEntity.badRequest().body(response.getMessage());
+    }
+    try {
+      Set<String> rolesStringSet = request.getRoles();
+      Set<Role> roles = new HashSet<>();
+      if (rolesStringSet == null) {
+        roleRepository.findByName(Roles.ROLE_USER)
+                .map(roles::add)
+                .orElseThrow(() -> new RuntimeException("Role not found."));
+      } else {
+        rolesStringSet.forEach(roleString ->
+                roleRepository.findByName(Roles.valueOf(roleString))
                         .map(roles::add)
-                        .orElseThrow(() -> new RuntimeException("Role not found."));
-            } else {
-                rolesStringSet.forEach(roleString ->
-                        roleRepository.findByName(Roles.valueOf(roleString))
-                                .map(roles::add)
-                                .orElseThrow(() -> new RuntimeException("Role not found")));
-            }
-            logger.info("Roles: {}", roles);
+                        .orElseThrow(() -> new RuntimeException("Role not found")));
+      }
+      logger.info("Roles: {}", roles);
 
-            User user = new User()
-                    .withUsername(request.getUsername())
-                    .withEmail(request.getEmail())
-                    .withPassword(encoder.encode(request.getPassword()))
-                    .withRoles(roles);
-            userRepository.save(user);
-            UserResource resource = mapper.map(user, UserResource.class);
-            RegisterResponse response = new RegisterResponse(resource);
-            return ResponseEntity.ok(response.getResource());
-        } catch (Exception e) {
-            RegisterResponse response = new RegisterResponse(e.getMessage());
-            return ResponseEntity.badRequest().body(response.getMessage());
-        }
+      User user = new User()
+              .withUsername(request.getUsername())
+              .withEmail(request.getEmail())
+              .withPassword(encoder.encode(request.getPassword()))
+              .withRoles(roles);
+      userRepository.save(user);
+      UserResource resource = mapper.map(user, UserResource.class);
+      RegisterResponse response = new RegisterResponse(resource);
+      return ResponseEntity.ok(response.getResource());
+    } catch (Exception e) {
+      RegisterResponse response = new RegisterResponse(e.getMessage());
+      return ResponseEntity.badRequest().body(response.getMessage());
     }
+  }
 
-    @Override
-    public List<User> getAll() {
-        return userRepository.findAll();
-    }
+  @Override
+  public List<User> getAll() {
+    return userRepository.findAll();
+  }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException(String.format("User not found with username: %s", username)));
-        return UserDetailsImpl.build(user);
-    }
+  @Override
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    User user = userRepository.findByUsername(username)
+            .orElseThrow(() -> new UsernameNotFoundException(String.format("User not found with username: %s", username)));
+    return UserDetailsImpl.build(user);
+  }
 }

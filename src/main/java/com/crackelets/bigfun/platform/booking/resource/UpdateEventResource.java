@@ -13,14 +13,14 @@ import java.util.Date;
 
 public class UpdateEventResource {
 
-    private Long id;
-    private String name;
-    private String address;
-    private int capacity;
-    private String image;
-    private Date date;
-    private Time hour;
-    private int cost;
-    private String district;
+  private Long id;
+  private String name;
+  private String address;
+  private int capacity;
+  private String image;
+  private Date date;
+  private Time hour;
+  private int cost;
+  private String district;
 
 }

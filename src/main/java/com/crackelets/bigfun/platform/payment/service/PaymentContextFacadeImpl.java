@@ -8,14 +8,14 @@ import java.util.List;
 
 public class PaymentContextFacadeImpl implements PaymentContextFacade {
 
-    private final PaymentService paymentService;
+  private final PaymentService paymentService;
 
-    public PaymentContextFacadeImpl(PaymentService paymentService) {
-        this.paymentService = paymentService;
-    }
+  public PaymentContextFacadeImpl(PaymentService paymentService) {
+    this.paymentService = paymentService;
+  }
 
-    @Override
-    public List<Payment> getAllPayments() {
-        return paymentService.getAll();
-    }
+  @Override
+  public List<Payment> getAllPayments() {
+    return paymentService.getAll();
+  }
 }

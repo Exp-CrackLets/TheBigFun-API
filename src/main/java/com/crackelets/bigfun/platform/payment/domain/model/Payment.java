@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 import lombok.*;
 
 
@@ -18,18 +19,18 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name= "payments")
+@Table(name = "payments")
 public class Payment extends AuditModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    private Date date;
+  private Date date;
 
-    @NotNull
-    @NotBlank
-    @Size(max=500)
-    private String qrImg;
+  @NotNull
+  @NotBlank
+  @Size(max = 500)
+  private String qrImg;
 
 
 }

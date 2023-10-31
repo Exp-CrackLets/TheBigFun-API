@@ -12,10 +12,10 @@ import java.util.List;
 @With
 public class AuthenticateResource {
 
-    private Long id;
-    private String username;
-    private String email;
-    private List<String> roles;
-    private String token;
+  private Long id;
+  private String username;
+  private String email;
+  private List<String> roles;
+  private String token;
 
 }

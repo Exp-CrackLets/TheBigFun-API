@@ -14,29 +14,21 @@ import java.util.List;
 
 public class EventPaymentMapper implements Serializable {
 
-    @Autowired
-    private EnhancedModelMapper mapper;
+  @Autowired
+  private EnhancedModelMapper mapper;
 
-    public EventPaymentResource toResource(EventPayment model){
+  public EventPaymentResource toResource(EventPayment model) {
 
-        return mapper.map(model,EventPaymentResource.class);
-    }
+    return mapper.map(model, EventPaymentResource.class);
+  }
 
-    public Page<EventPaymentResource> modelListPage(List<EventPayment>modelList, Pageable pageable){
-        return new PageImpl<>(mapper.mapList(modelList,EventPaymentResource.class),pageable, modelList.size());
-    }
+  public Page<EventPaymentResource> modelListPage(List<EventPayment> modelList, Pageable pageable) {
+    return new PageImpl<>(mapper.mapList(modelList, EventPaymentResource.class), pageable, modelList.size());
+  }
 
-    public EventPayment toModel(CreateEventPaymentResource resource){ return mapper.map(resource,EventPayment.class); }
-
-
-
-
-
-
-
-
-
-
+  public EventPayment toModel(CreateEventPaymentResource resource) {
+    return mapper.map(resource, EventPayment.class);
+  }
 
 
 }

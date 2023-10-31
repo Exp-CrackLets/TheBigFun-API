@@ -14,45 +14,45 @@ import java.util.List;
 @Service
 public class EventAttendeeServiceImpl implements EventAttendeeService {
 
-    private static final String ENTITY = "Event";
+  private static final String ENTITY = "Event";
 
-    private final EventAttendeeRepository eventAttendeeRepository;
+  private final EventAttendeeRepository eventAttendeeRepository;
 
-    private final EventRepository eventRepository;
+  private final EventRepository eventRepository;
 
-    private final Validator validator;
+  private final Validator validator;
 
-    public EventAttendeeServiceImpl(EventAttendeeRepository eventAttendeeRepository, EventRepository eventRepository, Validator validator) {
-        this.eventAttendeeRepository = eventAttendeeRepository;
-        this.eventRepository = eventRepository;
-        this.validator = validator;
-    }
+  public EventAttendeeServiceImpl(EventAttendeeRepository eventAttendeeRepository, EventRepository eventRepository, Validator validator) {
+    this.eventAttendeeRepository = eventAttendeeRepository;
+    this.eventRepository = eventRepository;
+    this.validator = validator;
+  }
 
 
-    @Override
-    public List<EventAttendee> getAll() {
-        return eventAttendeeRepository.findAll();
-    }
+  @Override
+  public List<EventAttendee> getAll() {
+    return eventAttendeeRepository.findAll();
+  }
 
-    @Override
-    public EventAttendee create(EventAttendee eventAttendee) {
-        return null;
-    }
+  @Override
+  public EventAttendee create(EventAttendee eventAttendee) {
+    return null;
+  }
 
-    @Override
-    public ResponseEntity<?> delete(Long eventAttendeeId) {
-        return null;
-    }
+  @Override
+  public ResponseEntity<?> delete(Long eventAttendeeId) {
+    return null;
+  }
 
-    @Override
-    public List<EventAttendee> getAllByAttendeeId(Long attendeeId) {
-        return eventAttendeeRepository.findAllByAttendeeId(attendeeId);
-    }
+  @Override
+  public List<EventAttendee> getAllByAttendeeId(Long attendeeId) {
+    return eventAttendeeRepository.findAllByAttendeeId(attendeeId);
+  }
 
-    @Override
-    public List<EventAttendee> getAllAttendeesByEventId(Long eventId) {
-        var event=eventRepository.findById(eventId);
-        if(event==null) throw new ResourceValidationException("the event doesn't exist");
-        return eventAttendeeRepository.findAllByEvent(event);
-    }
+  @Override
+  public List<EventAttendee> getAllAttendeesByEventId(Long eventId) {
+    var event = eventRepository.findById(eventId);
+    if (event == null) throw new ResourceValidationException("the event doesn't exist");
+    return eventAttendeeRepository.findAllByEvent(event);
+  }
 }

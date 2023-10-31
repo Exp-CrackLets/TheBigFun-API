@@ -8,5 +8,5 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateOrganizerEventResource {
-    private Long eventId;
+  private Long eventId;
 }

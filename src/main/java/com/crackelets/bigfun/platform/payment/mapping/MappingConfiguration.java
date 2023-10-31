@@ -5,8 +5,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration("paymentMappingConfiguration")
 public class MappingConfiguration {
-    @Bean
-    public PaymentMapper paymentMapper() {
-        return new PaymentMapper();
-    }
+  @Bean
+  public PaymentMapper paymentMapper() {
+    return new PaymentMapper();
+  }
 }

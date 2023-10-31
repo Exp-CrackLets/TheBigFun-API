@@ -16,25 +16,25 @@ import java.util.List;
 
 public class RoleMapper implements Serializable {
 
-    @Autowired
-    EnhancedModelMapper mapper;
+  @Autowired
+  EnhancedModelMapper mapper;
 
-    Converter<Roles, String> rolesToStringConverter = new AbstractConverter<Roles, String>() {
-        @Override
-        protected String convert(Roles roles) {
-            return roles == null ? null : roles.name();
-        }
-    };
-
-    // Object Mapping
-    public RoleResource toResource(Role model) {
-        mapper.addConverter(rolesToStringConverter);
-        return mapper.map(model, RoleResource.class);
+  Converter<Roles, String> rolesToStringConverter = new AbstractConverter<Roles, String>() {
+    @Override
+    protected String convert(Roles roles) {
+      return roles == null ? null : roles.name();
     }
+  };
 
-    public Page<RoleResource> modelListToPage(List<Role> modelList, Pageable pageable) {
-        mapper.addConverter(rolesToStringConverter);
-        return new PageImpl<>(mapper.mapList(modelList, RoleResource.class), pageable, modelList.size());
-    }
+  // Object Mapping
+  public RoleResource toResource(Role model) {
+    mapper.addConverter(rolesToStringConverter);
+    return mapper.map(model, RoleResource.class);
+  }
+
+  public Page<RoleResource> modelListToPage(List<Role> modelList, Pageable pageable) {
+    mapper.addConverter(rolesToStringConverter);
+    return new PageImpl<>(mapper.mapList(modelList, RoleResource.class), pageable, modelList.size());
+  }
 
 }

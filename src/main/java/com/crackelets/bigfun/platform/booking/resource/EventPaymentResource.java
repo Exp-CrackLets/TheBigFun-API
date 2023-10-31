@@ -9,6 +9,6 @@ import lombok.*;
 @NoArgsConstructor
 public class EventPaymentResource {
 
-    private Long paymentId;
-    private Long Event;
+  private Long paymentId;
+  private Long Event;
 }

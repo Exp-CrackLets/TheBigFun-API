@@ -15,26 +15,26 @@ import java.util.List;
 public class EventPaymentServiceImpl implements EventPaymentService {
 
 
-    private final EventPaymentRepository eventPaymentRepository;
+  private final EventPaymentRepository eventPaymentRepository;
 
-    private final EventRepository eventRepository;
+  private final EventRepository eventRepository;
 
-    public EventPaymentServiceImpl(EventPaymentRepository eventPaymentRepository, EventRepository eventRepository) {
-        this.eventPaymentRepository = eventPaymentRepository;
-        this.eventRepository = eventRepository;
-    }
+  public EventPaymentServiceImpl(EventPaymentRepository eventPaymentRepository, EventRepository eventRepository) {
+    this.eventPaymentRepository = eventPaymentRepository;
+    this.eventRepository = eventRepository;
+  }
 
 
-    @Override
-    public List<EventPayment> getAll() {
-        return eventPaymentRepository.findAll();
-    }
+  @Override
+  public List<EventPayment> getAll() {
+    return eventPaymentRepository.findAll();
+  }
 
-    @Override
-    public List<EventPayment> getAllPaymentByEventId(Long eventId) {
+  @Override
+  public List<EventPayment> getAllPaymentByEventId(Long eventId) {
 
-        var event=eventRepository.findById(eventId);
-        if(event==null) throw new ResourceValidationException("The Event doesn't exist.");
-        return eventPaymentRepository.findAllByEvent(event);
-    }
+    var event = eventRepository.findById(eventId);
+    if (event == null) throw new ResourceValidationException("The Event doesn't exist.");
+    return eventPaymentRepository.findAllByEvent(event);
+  }
 }

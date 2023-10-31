@@ -15,55 +15,57 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.util.List;
 import java.util.Set;
+
 @Service
 public class PaymentServiceImpl implements PaymentService {
-    private static final String ENTITY = "Payment";
-    private final PaymentRepository paymentRepository;
-    private final Validator validator;
+  private static final String ENTITY = "Payment";
+  private final PaymentRepository paymentRepository;
+  private final Validator validator;
 
-    public PaymentServiceImpl(PaymentRepository paymentRepository, Validator validator) {
-        this.paymentRepository = paymentRepository;
-        this.validator = validator;
-    }
+  public PaymentServiceImpl(PaymentRepository paymentRepository, Validator validator) {
+    this.paymentRepository = paymentRepository;
+    this.validator = validator;
+  }
 
-    @Override
-    public List<Payment> getAll() {
-        return paymentRepository.findAll();
-    }
+  @Override
+  public List<Payment> getAll() {
+    return paymentRepository.findAll();
+  }
 
-    @Override
-    public Page<Payment> getAll(Pageable pageable) {
-        return paymentRepository.findAll(pageable);
-    }
+  @Override
+  public Page<Payment> getAll(Pageable pageable) {
+    return paymentRepository.findAll(pageable);
+  }
 
-    @Override
-    public Payment getById(Long paymentId) {
-        return paymentRepository.findById(paymentId)
-                .orElseThrow(()-> new ResourceNotFoundException(ENTITY, paymentId));
-    }
+  @Override
+  public Payment getById(Long paymentId) {
+    return paymentRepository.findById(paymentId)
+            .orElseThrow(() -> new ResourceNotFoundException(ENTITY, paymentId));
+  }
 
-    @Override
-    public Payment create(Payment payment) {
-        Set<ConstraintViolation<Payment>> violations = validator.validate(payment);
+  @Override
+  public Payment create(Payment payment) {
+    Set<ConstraintViolation<Payment>> violations = validator.validate(payment);
 
-        if(!violations.isEmpty())
-            throw new ResourceValidationException(ENTITY, violations);
-        Payment paymentWithDate = paymentRepository.findByDate(payment.getDate());
+    if (!violations.isEmpty())
+      throw new ResourceValidationException(ENTITY, violations);
+    Payment paymentWithDate = paymentRepository.findByDate(payment.getDate());
 
 
-        return paymentRepository.save(payment);
-    }
+    return paymentRepository.save(payment);
+  }
 
-    @Override
-    public Payment update(Long id, Payment payment) {
-        return null;
-    }
+  @Override
+  public Payment update(Long id, Payment payment) {
+    return null;
+  }
 
-    @Override
-    public ResponseEntity<?> delete(Long paymentId) {
-        return paymentRepository.findById(paymentId).map(payment ->{
-            paymentRepository.delete(payment);
-            return ResponseEntity.ok().build();})
-                .orElseThrow(()->new ResourceNotFoundException(ENTITY,paymentId));
-    }
+  @Override
+  public ResponseEntity<?> delete(Long paymentId) {
+    return paymentRepository.findById(paymentId).map(payment -> {
+              paymentRepository.delete(payment);
+              return ResponseEntity.ok().build();
+            })
+            .orElseThrow(() -> new ResourceNotFoundException(ENTITY, paymentId));
+  }
 }

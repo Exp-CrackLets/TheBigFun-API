@@ -13,24 +13,24 @@ import java.util.List;
 @Service
 public class OrganizerEventServiceImpl implements OrganizerEventService {
 
-    private final OrganizerEventRepository organizerEventRepository;
+  private final OrganizerEventRepository organizerEventRepository;
 
-    private final OrganizerRepository organizerRepository;
+  private final OrganizerRepository organizerRepository;
 
-    public OrganizerEventServiceImpl(OrganizerEventRepository organizerEventRepository, OrganizerRepository organizerRepository) {
-        this.organizerEventRepository = organizerEventRepository;
-        this.organizerRepository = organizerRepository;
-    }
+  public OrganizerEventServiceImpl(OrganizerEventRepository organizerEventRepository, OrganizerRepository organizerRepository) {
+    this.organizerEventRepository = organizerEventRepository;
+    this.organizerRepository = organizerRepository;
+  }
 
-    @Override
-    public List<OrganizerEvent> getAll() {
-        return organizerEventRepository.findAll();
-    }
+  @Override
+  public List<OrganizerEvent> getAll() {
+    return organizerEventRepository.findAll();
+  }
 
-    @Override
-    public List<OrganizerEvent> getAllByOrganizerId(Long organizerId) {
-        var organizer=organizerRepository.findById(organizerId);
-        if(organizer==null) throw new ResourceValidationException("The organizer doesn't exist.");
-        return organizerEventRepository.findAllByOrganizerId(organizerId);
-    }
+  @Override
+  public List<OrganizerEvent> getAllByOrganizerId(Long organizerId) {
+    var organizer = organizerRepository.findById(organizerId);
+    if (organizer == null) throw new ResourceValidationException("The organizer doesn't exist.");
+    return organizerEventRepository.findAllByOrganizerId(organizerId);
+  }
 }

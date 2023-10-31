@@ -21,81 +21,82 @@ import java.util.Set;
 public class EventServiceImpl implements EventService {
 
 
-    private static final String ENTITY = "Event";
+  private static final String ENTITY = "Event";
 
-    private final EventRepository eventRepository;
+  private final EventRepository eventRepository;
 
-    private final Validator validator;
+  private final Validator validator;
 
-    public EventServiceImpl(EventRepository eventRepository, Validator validator) {
-        this.eventRepository = eventRepository;
-        this.validator = validator;
+  public EventServiceImpl(EventRepository eventRepository, Validator validator) {
+    this.eventRepository = eventRepository;
+    this.validator = validator;
+  }
+
+  @Override
+  public List<Event> getAll() {
+    return eventRepository.findAll();
+  }
+
+  @Override
+  public Page<Event> getAll(Pageable pageable) {
+    return eventRepository.findAll(pageable);
+  }
+
+
+  @Override
+  public Event getById(long eventId) {
+    return eventRepository.findById(eventId)
+            .orElseThrow(() -> new ResourceNotFoundException(ENTITY, eventId));
+  }
+
+  @Override
+  public Event create(Event event) {
+    Set<ConstraintViolation<Event>> violations = validator.validate(event);
+
+    if (!violations.isEmpty())
+      throw new ResourceValidationException(ENTITY, violations);
+
+    Event eventWithName = eventRepository.findByName(event.getName());
+
+    if (eventWithName != null)
+      throw new ResourceValidationException(ENTITY, "An event with the same name already exists. ");
+
+    return eventRepository.save(event);
+
+  }
+
+  @Override
+  public Event update(Long eventId, Event event) {
+    Event eventToUpdate = eventRepository.findById(eventId)
+            .orElseThrow(() -> new ResourceNotFoundException(ENTITY, eventId));
+
+    Set<ConstraintViolation<Event>> violations = validator.validate(event);
+
+    if (!violations.isEmpty()) {
+      throw new ResourceValidationException(ENTITY, violations);
     }
+    Event eventWithName = eventRepository.findByName(event.getName());
 
-    @Override
-    public List<Event> getAll() {
-        return eventRepository.findAll();
+    if (eventWithName != null && !eventWithName.getId().equals(eventId)) {
+      throw new ResourceValidationException(ENTITY, "An event with the same name already exists.");
     }
+    eventToUpdate.setName(event.getName());
+    eventToUpdate.setDate(event.getDate());
+    eventToUpdate.setAddress(event.getAddress());
+    eventToUpdate.setCost(event.getCost());
+    eventToUpdate.setImage(event.getImage());
+    eventToUpdate.setCapacity(event.getCapacity());
+    return eventRepository.save(eventToUpdate);
+  }
 
-    @Override
-    public Page<Event> getAll(Pageable pageable) {
-        return eventRepository.findAll(pageable);
-    }
-
-
-    @Override
-    public Event getById(long eventId) {
-        return eventRepository.findById(eventId)
-                .orElseThrow(()-> new ResourceNotFoundException(ENTITY, eventId));
-    }
-
-    @Override
-    public Event create(Event event) {
-        Set<ConstraintViolation<Event>> violations= validator.validate(event);
-
-        if (!violations.isEmpty())
-            throw  new ResourceValidationException(ENTITY, violations);
-
-        Event eventWithName = eventRepository.findByName(event.getName());
-
-        if(eventWithName != null)
-            throw new ResourceValidationException(ENTITY, "An event with the same name already exists. ");
-
-        return eventRepository.save(event);
-
-    }
-
-    @Override
-    public Event update(Long eventId, Event event) {
-        Event eventToUpdate = eventRepository.findById(eventId)
-                .orElseThrow(() -> new ResourceNotFoundException(ENTITY, eventId));
-
-        Set<ConstraintViolation<Event>> violations = validator.validate(event);
-
-        if (!violations.isEmpty()) {
-            throw new ResourceValidationException(ENTITY, violations);
-        }
-        Event eventWithName = eventRepository.findByName(event.getName());
-
-        if (eventWithName != null && !eventWithName.getId().equals(eventId)) {
-            throw new ResourceValidationException(ENTITY, "An event with the same name already exists.");
-        }
-        eventToUpdate.setName(event.getName());
-        eventToUpdate.setDate(event.getDate());
-        eventToUpdate.setAddress(event.getAddress());
-        eventToUpdate.setCost(event.getCost());
-        eventToUpdate.setImage(event.getImage());
-        eventToUpdate.setCapacity(event.getCapacity());
-        return eventRepository.save(eventToUpdate);
-    }
-    @Override
-    public ResponseEntity<?> delete(Long eventId) {
-        return eventRepository.findById(eventId).map(event -> {
-            eventRepository.delete(event);
-            return  ResponseEntity.ok().build();
-        })
-                .orElseThrow(()-> new ResourceNotFoundException(ENTITY, eventId));
-    }
+  @Override
+  public ResponseEntity<?> delete(Long eventId) {
+    return eventRepository.findById(eventId).map(event -> {
+              eventRepository.delete(event);
+              return ResponseEntity.ok().build();
+            })
+            .orElseThrow(() -> new ResourceNotFoundException(ENTITY, eventId));
+  }
 
 /*    @Override
     public List<Event> getAllByOrganizerId(Long id) {
@@ -103,10 +104,10 @@ public class EventServiceImpl implements EventService {
     }*/
 
 
-    @Override
-    public Event addAttendeeToEvent(Long eventId, Long eventAttendeeId) {
-        return eventRepository.findById(eventId).map(event -> {
-            return eventRepository.save(event.addAttendee(event,eventAttendeeId));
-        }).orElseThrow(()->new ResourceNotFoundException(ENTITY,eventId));
-    }
+  @Override
+  public Event addAttendeeToEvent(Long eventId, Long eventAttendeeId) {
+    return eventRepository.findById(eventId).map(event -> {
+      return eventRepository.save(event.addAttendee(event, eventAttendeeId));
+    }).orElseThrow(() -> new ResourceNotFoundException(ENTITY, eventId));
+  }
 }

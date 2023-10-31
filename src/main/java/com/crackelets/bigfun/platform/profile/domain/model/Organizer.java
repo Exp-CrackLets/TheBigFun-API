@@ -1,10 +1,12 @@
 package com.crackelets.bigfun.platform.profile.domain.model;
 
 import com.crackelets.bigfun.platform.shared.domain.model.AuditModel;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 import lombok.*;
 
 import java.util.HashSet;
@@ -20,36 +22,35 @@ import java.util.Set;
 
 public class Organizer extends AuditModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //Autogenerate value
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY) //Autogenerate value
+  private Long id;
 
-    @NotNull
-    @NotBlank
-    @Size(max = 50)
-    @Column(unique = true)
-    private String userName;
+  @NotNull
+  @NotBlank
+  @Size(max = 50)
+  @Column(unique = true)
+  private String userName;
 
-    @NotNull
-    @NotBlank
-    @Size(max = 255)
-    private String name;
+  @NotNull
+  @NotBlank
+  @Size(max = 255)
+  private String name;
 
-    @NotNull
-    @NotBlank
-    @Size(max = 255)
-    private String email;
+  @NotNull
+  @NotBlank
+  @Size(max = 255)
+  private String email;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch=FetchType.EAGER,mappedBy="organizer")
-    private Set<OrganizerEvent> eventsListByOrganizer;
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "organizer")
+  private Set<OrganizerEvent> eventsListByOrganizer;
 
-    public Organizer addEvent(Organizer organizer,long eventId){
-        if(eventsListByOrganizer==null) eventsListByOrganizer=new HashSet<>();
-        this.eventsListByOrganizer.add(new OrganizerEvent(this,eventId));
+  public Organizer addEvent(Organizer organizer, long eventId) {
+    if (eventsListByOrganizer == null) eventsListByOrganizer = new HashSet<>();
+    this.eventsListByOrganizer.add(new OrganizerEvent(this, eventId));
 
-        return this;
-    }
-
+    return this;
+  }
 
 
 }

@@ -14,17 +14,19 @@ import java.util.List;
 
 public class OrganizerEventMapper implements Serializable {
 
-    @Autowired
-    private EnhancedModelMapper mapper;
+  @Autowired
+  private EnhancedModelMapper mapper;
 
-    public OrganizerEventResource toResource(OrganizerEvent model){
-        return mapper.map(model,OrganizerEventResource.class);
-    }
+  public OrganizerEventResource toResource(OrganizerEvent model) {
+    return mapper.map(model, OrganizerEventResource.class);
+  }
 
-    public Page<OrganizerEventResource> modelListPage(List<OrganizerEvent> modelList, Pageable pageable){
-        return new PageImpl<>(mapper.mapList(modelList,OrganizerEventResource.class),pageable, modelList.size());
-    }
+  public Page<OrganizerEventResource> modelListPage(List<OrganizerEvent> modelList, Pageable pageable) {
+    return new PageImpl<>(mapper.mapList(modelList, OrganizerEventResource.class), pageable, modelList.size());
+  }
 
-    public OrganizerEvent toModel(CreateOrganizerEventResource resource){ return mapper.map(resource,OrganizerEvent.class); }
+  public OrganizerEvent toModel(CreateOrganizerEventResource resource) {
+    return mapper.map(resource, OrganizerEvent.class);
+  }
 
 }

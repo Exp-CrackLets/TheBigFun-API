@@ -15,25 +15,27 @@ import java.util.List;
 
 public class AttendeeMapper implements Serializable {
 
-    @Autowired
-    private EnhancedModelMapper mapper;
+  @Autowired
+  private EnhancedModelMapper mapper;
 
-    public AttendeeResource toResource(Attendee model){ return mapper.map(model, AttendeeResource.class); }
-    // model -> Resource
-
-
-    public Attendee toModel(CreateAttendeeResource resource) {
-        return mapper.map(resource, Attendee.class);
-    }
-    // Resource -> model
+  public AttendeeResource toResource(Attendee model) {
+    return mapper.map(model, AttendeeResource.class);
+  }
+  // model -> Resource
 
 
-    public Attendee toModel(UpdateAttendeeResource resource) {
-        return mapper.map(resource, Attendee.class);
-    }
+  public Attendee toModel(CreateAttendeeResource resource) {
+    return mapper.map(resource, Attendee.class);
+  }
+  // Resource -> model
 
-    public Page<AttendeeResource> modelListPage(List<Attendee> modelList, Pageable pageable) {
-        return new PageImpl<>(mapper.mapList(modelList, AttendeeResource.class), pageable, modelList.size());
-    }
+
+  public Attendee toModel(UpdateAttendeeResource resource) {
+    return mapper.map(resource, Attendee.class);
+  }
+
+  public Page<AttendeeResource> modelListPage(List<Attendee> modelList, Pageable pageable) {
+    return new PageImpl<>(mapper.mapList(modelList, AttendeeResource.class), pageable, modelList.size());
+  }
 
 }

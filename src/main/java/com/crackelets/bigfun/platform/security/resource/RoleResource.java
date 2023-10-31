@@ -8,6 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @With
 public class RoleResource {
-    private Long id;
-    private String name;
+  private Long id;
+  private String name;
 }

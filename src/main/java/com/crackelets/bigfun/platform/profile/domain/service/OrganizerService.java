@@ -9,27 +9,25 @@ import java.util.List;
 
 public interface OrganizerService {
 
-    List<Organizer> getAll();
+  List<Organizer> getAll();
 
-    Page<Organizer> getAll(Pageable pageable);
+  Page<Organizer> getAll(Pageable pageable);
 
-    Organizer getById(Long organizerId);
+  Organizer getById(Long organizerId);
 
-    Organizer getByName(String Name);
+  Organizer getByName(String Name);
 
-    Organizer create(Organizer organizer);
+  Organizer create(Organizer organizer);
 
-    Organizer update(Long organizerId,Organizer organizer);
+  Organizer update(Long organizerId, Organizer organizer);
 
-    ResponseEntity<?> delete (Long organizerId);
+  ResponseEntity<?> delete(Long organizerId);
 
 
+  Organizer addEventToOrganizer(Long organizerId, String eventName);
 
-    Organizer addEventToOrganizer(Long organizerId, String eventName);
-
-    //ver  para el pago!!!!!!!!
-    Organizer addPayToOrganizer(Long organizerId, Long paymentId);
-
+  //ver  para el pago!!!!!!!!
+  Organizer addPayToOrganizer(Long organizerId, Long paymentId);
 
 
 }

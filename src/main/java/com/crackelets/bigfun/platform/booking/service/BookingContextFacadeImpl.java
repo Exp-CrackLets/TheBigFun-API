@@ -7,15 +7,15 @@ import com.crackelets.bigfun.platform.booking.domain.service.EventService;
 import java.util.List;
 
 public class BookingContextFacadeImpl implements BookingContextFacade {
-    private final EventService eventService;
+  private final EventService eventService;
 
-    public BookingContextFacadeImpl(EventService eventService) {
-        this.eventService = eventService;
-    }
+  public BookingContextFacadeImpl(EventService eventService) {
+    this.eventService = eventService;
+  }
 
-    @Override
-    public List<Event> getAllEvents() {
-        return eventService.getAll();
-    }
+  @Override
+  public List<Event> getAllEvents() {
+    return eventService.getAll();
+  }
 
 }

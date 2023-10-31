@@ -16,17 +16,22 @@ import java.util.List;
 public class EventMapper implements Serializable {
 
 
-    @Autowired
-    private EnhancedModelMapper mapper;
+  @Autowired
+  private EnhancedModelMapper mapper;
 
-    public EventResource toResource(Event model){
-        return mapper.map(model, EventResource.class);}
+  public EventResource toResource(Event model) {
+    return mapper.map(model, EventResource.class);
+  }
 
-    public Page<EventResource> modelListPage(List<Event> modelList, Pageable pageable){
-        return new PageImpl<>(mapper.mapList(modelList, EventResource.class), pageable, modelList.size());
-    }
+  public Page<EventResource> modelListPage(List<Event> modelList, Pageable pageable) {
+    return new PageImpl<>(mapper.mapList(modelList, EventResource.class), pageable, modelList.size());
+  }
 
-    public Event toModel(CreateEventResource resource){ return mapper.map(resource, Event.class);}
+  public Event toModel(CreateEventResource resource) {
+    return mapper.map(resource, Event.class);
+  }
 
-    public Event toModel(UpdateEventResource resource){ return mapper.map(resource, Event.class);}
+  public Event toModel(UpdateEventResource resource) {
+    return mapper.map(resource, Event.class);
+  }
 }

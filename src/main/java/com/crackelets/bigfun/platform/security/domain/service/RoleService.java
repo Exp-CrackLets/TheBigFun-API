@@ -6,7 +6,8 @@ import java.util.List;
 
 public interface RoleService {
 
-    void seed();
-    List<Role> getAll();
+  void seed();
+
+  List<Role> getAll();
 
 }

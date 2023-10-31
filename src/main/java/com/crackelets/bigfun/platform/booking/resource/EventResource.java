@@ -14,20 +14,16 @@ import java.util.Set;
 @NoArgsConstructor
 public class EventResource {
 
-    private Long id;
-    private String name;
-    private String address;
-    private int capacity;
-    private String image;
-    private Date date;
-    private int cost;
-    private String district;
-    private Set<EventAttendee> attendeesListByEvent;
-    private Set<EventPayment> payments;
-
-
-
-
+  private Long id;
+  private String name;
+  private String address;
+  private int capacity;
+  private String image;
+  private Date date;
+  private int cost;
+  private String district;
+  private Set<EventAttendee> attendeesListByEvent;
+  private Set<EventPayment> payments;
 
 
 }

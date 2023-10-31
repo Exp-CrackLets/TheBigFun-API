@@ -10,21 +10,21 @@ import java.util.List;
 
 public interface EventService {
 
-    List <Event> getAll();
+  List<Event> getAll();
 
-    Page<Event> getAll(Pageable pageable);
+  Page<Event> getAll(Pageable pageable);
 
-    Event getById(long eventId);
+  Event getById(long eventId);
 
 
-    Event create(Event event);
-    Event update(Long eventId, Event event);
+  Event create(Event event);
 
-    ResponseEntity<?> delete(Long eventId);
+  Event update(Long eventId, Event event);
 
-    //List<Event> getAllByOrganizerId(Long id);
-    Event addAttendeeToEvent(Long eventId, Long attendeeId);
+  ResponseEntity<?> delete(Long eventId);
 
+  //List<Event> getAllByOrganizerId(Long id);
+  Event addAttendeeToEvent(Long eventId, Long attendeeId);
 
 
 }

@@ -10,14 +10,14 @@ import java.util.List;
 @Service
 public class ProfileContextFacadeImpl implements ProfileContextFacade {
 
-    private final OrganizerService organizerService;
+  private final OrganizerService organizerService;
 
-    public ProfileContextFacadeImpl(OrganizerService organizerService) {
-        this.organizerService = organizerService;
-    }
+  public ProfileContextFacadeImpl(OrganizerService organizerService) {
+    this.organizerService = organizerService;
+  }
 
-    @Override
-    public List<Organizer> getAllOrganizers() {
-        return organizerService.getAll();
-    }
+  @Override
+  public List<Organizer> getAllOrganizers() {
+    return organizerService.getAll();
+  }
 }

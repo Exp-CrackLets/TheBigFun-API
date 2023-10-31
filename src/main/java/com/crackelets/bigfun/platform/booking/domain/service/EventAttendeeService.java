@@ -8,19 +8,17 @@ import java.util.List;
 
 public interface EventAttendeeService {
 
-    List<EventAttendee> getAll();
+  List<EventAttendee> getAll();
 
-    //EventAttendee getById(Long eventAttendeeId);
+  //EventAttendee getById(Long eventAttendeeId);
 
-    EventAttendee create(EventAttendee eventAttendee);
+  EventAttendee create(EventAttendee eventAttendee);
 
-    ResponseEntity<?> delete(Long eventAttendeeId);
+  ResponseEntity<?> delete(Long eventAttendeeId);
 
-    List<EventAttendee> getAllByAttendeeId(Long attendeeId);
+  List<EventAttendee> getAllByAttendeeId(Long attendeeId);
 
-    List<EventAttendee> getAllAttendeesByEventId(Long eventId);
-
-
+  List<EventAttendee> getAllAttendeesByEventId(Long eventId);
 
 
 }

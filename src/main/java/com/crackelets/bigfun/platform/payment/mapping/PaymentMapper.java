@@ -14,16 +14,19 @@ import java.util.List;
 
 public class PaymentMapper implements Serializable {
 
-    @Autowired
-    private EnhancedModelMapper mapper;
-    public PaymentResource toResource(Payment model){
-        return mapper.map(model, PaymentResource.class);
-    }
-    public Payment toModel(CreatePaymentResource resource){
-        return mapper.map(resource, Payment.class);
-    }
-    public Page<PaymentResource> modelListPage(List<Payment> modelList, Pageable pageable){
-        return new PageImpl<>(mapper.mapList(modelList, PaymentResource.class), pageable, modelList.size());
-    }
+  @Autowired
+  private EnhancedModelMapper mapper;
+
+  public PaymentResource toResource(Payment model) {
+    return mapper.map(model, PaymentResource.class);
+  }
+
+  public Payment toModel(CreatePaymentResource resource) {
+    return mapper.map(resource, Payment.class);
+  }
+
+  public Page<PaymentResource> modelListPage(List<Payment> modelList, Pageable pageable) {
+    return new PageImpl<>(mapper.mapList(modelList, PaymentResource.class), pageable, modelList.size());
+  }
 
 }

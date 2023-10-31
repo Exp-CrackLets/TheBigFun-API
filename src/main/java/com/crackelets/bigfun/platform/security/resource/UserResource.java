@@ -12,9 +12,9 @@ import java.util.List;
 @With
 public class UserResource {
 
-    private Long id;
-    private String username;
-    private String email;
-    private List<RoleResource> roles;
+  private Long id;
+  private String username;
+  private String email;
+  private List<RoleResource> roles;
 
 }

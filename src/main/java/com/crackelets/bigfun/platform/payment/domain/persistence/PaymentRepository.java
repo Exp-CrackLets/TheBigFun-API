@@ -10,6 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface PaymentRepository extends JpaRepository<Payment, Long> {
-    Payment findByDate(Date date);
+  Payment findByDate(Date date);
 
 }

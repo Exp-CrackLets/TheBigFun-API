@@ -9,7 +9,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import java.util.List;
 
 public interface UserService extends UserDetailsService {
-    ResponseEntity<?> authentication(AuthenticateRequest request);
-    ResponseEntity<?>  register(RegisterRequest request);
-    List<User> getAll();
+  ResponseEntity<?> authentication(AuthenticateRequest request);
+
+  ResponseEntity<?> register(RegisterRequest request);
+
+  List<User> getAll();
 }

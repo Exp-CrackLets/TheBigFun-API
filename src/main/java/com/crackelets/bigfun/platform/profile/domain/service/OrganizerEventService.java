@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface OrganizerEventService {
 
-    List<OrganizerEvent> getAll();
-    List<OrganizerEvent> getAllByOrganizerId(Long organizerId);
+  List<OrganizerEvent> getAll();
+
+  List<OrganizerEvent> getAllByOrganizerId(Long organizerId);
 }

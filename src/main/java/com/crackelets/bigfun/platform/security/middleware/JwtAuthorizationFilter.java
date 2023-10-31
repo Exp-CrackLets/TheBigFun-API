@@ -22,49 +22,49 @@ import java.util.LinkedList;
 
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
-    private static final Logger logger = LoggerFactory.getLogger(JwtAuthorizationFilter.class);
+  private static final Logger logger = LoggerFactory.getLogger(JwtAuthorizationFilter.class);
 
-    @Autowired
-    private JwtHandler handler;
+  @Autowired
+  private JwtHandler handler;
 
-    @Autowired
-    private UserService userService;
+  @Autowired
+  private UserService userService;
 
-    private String parseTokenFrom(HttpServletRequest request) {
+  private String parseTokenFrom(HttpServletRequest request) {
 
-        String authorizationParameter = request.getHeader("Authorization");
+    String authorizationParameter = request.getHeader("Authorization");
 
-        if (StringUtils.hasText(authorizationParameter) && authorizationParameter.startsWith("Bearer")) {
-            String token = new LinkedList<>(
-                    Arrays.asList(authorizationParameter.split(" "))).getLast();
-            return token;
-        }
-
-        return null;
-
+    if (StringUtils.hasText(authorizationParameter) && authorizationParameter.startsWith("Bearer")) {
+      String token = new LinkedList<>(
+              Arrays.asList(authorizationParameter.split(" "))).getLast();
+      return token;
     }
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
-        try {
-            String token = parseTokenFrom(request);
-            if (token == null || !handler.validateToken(token)) {
-                filterChain.doFilter(request, response);
-                return;
-            }
-            logger.info("Token: {}", token);
-            String username = handler.getUsernameFrom(token);
-            UserDetails principal = userService.loadUserByUsername(username);
-            UsernamePasswordAuthenticationToken authenticationToken =
-                    new UsernamePasswordAuthenticationToken(principal, null,
-                            principal.getAuthorities());
-            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-        } catch (Exception e) {
-            logger.error("User Authentication cannot be set: {}", e.getMessage());
-        }
+    return null;
+
+  }
+
+  @Override
+  protected void doFilterInternal(HttpServletRequest request,
+                                  HttpServletResponse response,
+                                  FilterChain filterChain) throws ServletException, IOException {
+    try {
+      String token = parseTokenFrom(request);
+      if (token == null || !handler.validateToken(token)) {
         filterChain.doFilter(request, response);
+        return;
+      }
+      logger.info("Token: {}", token);
+      String username = handler.getUsernameFrom(token);
+      UserDetails principal = userService.loadUserByUsername(username);
+      UsernamePasswordAuthenticationToken authenticationToken =
+              new UsernamePasswordAuthenticationToken(principal, null,
+                      principal.getAuthorities());
+      authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+      SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+    } catch (Exception e) {
+      logger.error("User Authentication cannot be set: {}", e.getMessage());
     }
+    filterChain.doFilter(request, response);
+  }
 }

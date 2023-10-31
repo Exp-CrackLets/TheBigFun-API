@@ -6,7 +6,5 @@ import java.util.List;
 
 public interface BookingContextFacade {
 
-   List<Event> getAllEvents();
-   //List<Event> getAllByOrganizerId(Long id);
-
+  List<Event> getAllEvents();
 }

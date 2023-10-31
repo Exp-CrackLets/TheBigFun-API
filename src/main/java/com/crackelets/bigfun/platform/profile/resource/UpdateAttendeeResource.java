@@ -7,20 +7,20 @@ import javax.validation.constraints.Size;
 
 public class UpdateAttendeeResource {
 
-    private Long id;
+  private Long id;
 
-    @NotNull
-    @NotBlank
-    @Size(max = 50)
-    private String userName;
+  @NotNull
+  @NotBlank
+  @Size(max = 50)
+  private String userName;
 
-    @NotNull
-    @NotBlank
-    @Size(max = 255)
-    private String name;
+  @NotNull
+  @NotBlank
+  @Size(max = 255)
+  private String name;
 
-    @NotNull
-    @NotBlank
-    @Size(max = 255)
-    private String email;
+  @NotNull
+  @NotBlank
+  @Size(max = 255)
+  private String email;
 }

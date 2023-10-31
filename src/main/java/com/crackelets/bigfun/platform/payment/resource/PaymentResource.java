@@ -10,7 +10,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaymentResource {
-    private Long id;
-    private Date date;
-    private String qrImg;
+  private Long id;
+  private Date date;
+  private String qrImg;
 }
