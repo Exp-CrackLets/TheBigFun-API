@@ -38,6 +38,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
     @Autowired
     private RoleRepository roleRepository;
 
