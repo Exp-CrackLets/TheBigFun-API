@@ -5,21 +5,21 @@ pipeline {
         jdk 'JDK_17'
     }
     stages {
-        stage ('Compile Stage') {
+        stage ('Compile Stage 2023-2') {
             steps {
                 withMaven(maven : 'MAVEN_3_6_3') {
                     bat 'mvn clean compile'
                 }
             }
         }
-        stage ('Testing Stage') {
+        stage ('Testing Stage 2023-2') {
             steps {
                 withMaven(maven : 'MAVEN_3_6_3') {
                     bat 'mvn test'
                 }
             }
         }
-        stage ('package Stage') {
+        stage ('package Stage 2023-2') {
             steps {
                 withMaven(maven : 'MAVEN_3_6_3') {
                     bat 'mvn package'
