@@ -2,7 +2,7 @@ pipeline {
     agent any
     tools {
         maven 'MAVEN_3_6_3'
-        jdk 'JDK-17'
+        jdk 'jdk-17'
     }
     stages {
         stage ('Compile Stage 2023-2') {
