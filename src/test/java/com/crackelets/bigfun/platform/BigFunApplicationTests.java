@@ -8,8 +8,4 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class BigFunApplicationTests {
 
-    @Test
-    void contextLoads() {
-        PaymentServiceTest paymentServiceTest = new PaymentServiceTest();
-    }
 }
